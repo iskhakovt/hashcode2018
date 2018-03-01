@@ -94,7 +94,6 @@ void Game::push_ride(int car, const RideData& ride, int B) {
 
     result += ride.dist();
     cars[car].time = cars[car].timeOfFinish(ride);
-    cars[car].pos = ride.finish;
     cars[car].assignedRuns.push_back(ride.id);
 }
 

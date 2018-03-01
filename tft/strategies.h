@@ -5,6 +5,4 @@
 
 Game greedy_basic_iskhakovt(const Data& data);
 
-Game greedy_basic_thefacetakt(const Data& data);
-
 #endif //ISKHAKOVT_STRATEGIES_H

@@ -18,7 +18,7 @@ int main(int argc, char** argv) {
 
     auto data = Data::read(std::cin);
 
-    auto game = greedy_basic_thefacetakt(data);
+    auto game = greedy_basic_iskhakovt(data);
 
     game.print(std::cout);
 

@@ -66,7 +66,10 @@ struct Game {
     int64_t result = 0;
     int time = 0;
 
-    Game() = default;
+    explicit Game(int F) : cars(F) {}
+
+    bool validate_output(const Data& data);
+    void print(std::ostream&);
 };
 
 
@@ -81,6 +84,8 @@ struct Car {
 
     Car() = default;
 
+    int timeOfStart(const RideData& ride) const;
+    int timeOfFinish(const RideData& ride) const;
     bool canGetTo(const RideData& ride) const;
 };
 

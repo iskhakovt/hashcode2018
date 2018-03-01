@@ -149,3 +149,6 @@ CTestTestfile.cmake
 
 cmake-build-debug/
 .idea/
+build/
+bbuild/
+*.DS_STORE

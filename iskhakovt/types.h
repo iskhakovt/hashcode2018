@@ -4,6 +4,7 @@
 #include <cassert>
 #include <cstdint>
 #include <iostream>
+#include <set>
 #include <string>
 #include <vector>
 
@@ -51,8 +52,8 @@ struct RideData {
 
 struct Game {
     std::vector<Car> cars;
+    std::set<int> usedRuns;
     int64_t result = 0;
-    int time = 0;
 
     explicit Game(int F) : cars(F) {}
 

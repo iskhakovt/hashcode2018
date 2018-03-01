@@ -5,7 +5,9 @@
 #ifndef ISKHAKOVT_TYPES_H
 #define ISKHAKOVT_TYPES_H
 
+#include <cassert>
 #include <cstdint>
+#include <iostream>
 #include <vector>
 
 typedef std::pair<int, int> coord_t;
@@ -33,7 +35,11 @@ struct Data {
             B(B),
             T(T),
             rides(rides),
-            result(0) {}
+            result(0) {
+        assert(rides.size() == (size_t)N);
+    }
+
+    static Data read(std::istream&);
 };
 
 struct RideData {
@@ -53,6 +59,8 @@ struct RideData {
             latestFinish(_f),
             s(_s),
             f(_f) {}
+
+    static RideData read(std::istream&);
 };
 
 struct Car {

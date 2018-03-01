@@ -8,6 +8,11 @@
 using namespace std;
 
 
+const int FIRST_METRIC_BEST = 10;
+const int SECOND_METRIC_BEST = 10;
+const int STRATEGIES_BEST = 20;
+
+
 vector<int> get_best_rides(const Game& game, const Data& data, int car) {
     vector<pair<int, int>> candidates; // ride, time
 
@@ -32,10 +37,11 @@ vector<int> get_best_rides(const Game& game, const Data& data, int car) {
             }
 
             if (pushed) {
-                if (candidates.size() > 10) candidates.pop_back();
+                if (candidates.size() > FIRST_METRIC_BEST) candidates.pop_back();
             } else {
-                if (candidates.size() != 10) candidates.emplace_back(ride, time);
+                if (candidates.size() != FIRST_METRIC_BEST) candidates.emplace_back(ride, time);
             }
+            assert(candidates.size() <= FIRST_METRIC_BEST);
         }
     }
 
@@ -108,17 +114,18 @@ Game greedy_keep_many_iskhakovt(const Data& data) {
             const auto& game = games[i].first;
             auto cand = games[i].second;
 
-            for (int j = 0; j != 10 && !cand.empty(); ++j) {
+            for (int j = 0; j != SECOND_METRIC_BEST && !cand.empty(); ++j) {
                 int car = cand.begin()->second.first;
                 int ride = cand.begin()->second.second;
-                gameCandidates.emplace_back(i, car, ride, game.reward(car, data.rides[ride], data.B));
+                gameCandidates.emplace_back(i, car, ride, game.reward(car, data.rides[ride], data.B) + game.result);
+                cand.erase(cand.begin());
             }
         }
 
         if (gameCandidates.empty()) break;
 
         sort(gameCandidates.begin(), gameCandidates.end());
-        gameCandidates.erase(gameCandidates.begin() + min(gameCandidates.size(), (size_t)10), gameCandidates.end());
+        gameCandidates.erase(gameCandidates.begin() + min(gameCandidates.size(), (size_t)STRATEGIES_BEST), gameCandidates.end());
 
         vector<pair<Game, set<pair<int, pair<int, int>>>>> newGames;
         for (const auto& cand : gameCandidates) {

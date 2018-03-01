@@ -6,8 +6,11 @@
 
 
 int main(int argc, char** argv) {
-    if (argc == 2) {
+    if (argc >= 2) {
         freopen(argv[1], "r", stdin);
+    }
+    if (argc >= 3) {
+        freopen(argv[2], "w", stdout);
     }
 
     auto data = Data::read(std::cin);

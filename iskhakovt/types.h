@@ -4,6 +4,7 @@
 #include <cassert>
 #include <cstdint>
 #include <iostream>
+#include <string>
 #include <vector>
 
 typedef std::pair<int, int> coord_t;
@@ -94,5 +95,7 @@ struct Car {
 
 int get_dist(const coord_t&, const coord_t&);
 
+void print_percentage(int, int, const std::string& = "");
+void decide_print_percentage(int, int, const std::string& = "");
 
 #endif //ISKHAKOVT_TYPES_H

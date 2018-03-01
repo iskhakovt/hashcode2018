@@ -51,7 +51,10 @@ Game greedy_basic_iskhakovt(const Data& data) {
         }
     }
 
+    int done = 0;
     while (!candidates.empty()) {
+        decide_print_percentage(++done, RUNS, "runs");
+
         int car = candidates.begin()->second;
         int ride = next[car];
         assert(ride != -1);

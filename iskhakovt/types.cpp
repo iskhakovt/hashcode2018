@@ -63,3 +63,19 @@ void Game::print(std::ostream& out) {
         out << "\n";
     }
 }
+
+void print_percentage(int done, int all, const std::string& message) {
+    double percentage = static_cast<double>(done) / static_cast<double>(all);
+    if (!message.empty()) {
+        std::cerr << message << ": ";
+    }
+    std::cerr << percentage * 100.0 << "\r";
+    std::cerr.flush();
+}
+
+
+void decide_print_percentage(int done, int all, const std::string& message) {
+    if ((all < 1000) || (done % (all / 1000) == 0)) {
+        print_percentage(done, all, message);
+    }
+}

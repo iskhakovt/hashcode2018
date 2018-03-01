@@ -60,7 +60,8 @@ struct Game {
     bool validate_output(const Data& data);
     void print(std::ostream&);
 
-    void push_ride(int, const RideData&, int B);
+    void push_ride(int, const RideData&, int);
+    int64_t reward(int, const RideData&, int) const;
 };
 
 

@@ -3,6 +3,7 @@
 
 #include "types.h"
 
-Game greedy_basic_iskhakovt(const Data& data);
+Game greedy_basic_iskhakovt(const Data&);
+Game greedy_keep_many_iskhakovt(const Data&);
 
 #endif //ISKHAKOVT_STRATEGIES_H

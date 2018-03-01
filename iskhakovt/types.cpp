@@ -105,6 +105,18 @@ void Game::push_ride(int car, const RideData& ride, int B) {
     cars[car].assignedRuns.push_back(ride.id);
 }
 
+int64_t Game::reward(int car, const RideData& ride, int B) const {
+    if (!cars[car].canGetTo(ride)) {
+        return 0;
+    }
+
+    int64_t ret = ride.dist();
+    if (cars[car].timeOfStart(ride) == ride.earliestStart) {
+        ret += B;
+    }
+    return ret;
+}
+
 void print_percentage(int done, int all, const std::string& message) {
     double percentage = static_cast<double>(done) / static_cast<double>(all);
     if (!message.empty()) {

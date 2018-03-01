@@ -102,7 +102,7 @@ void print_percentage(int done, int all, const std::string& message) {
     if (!message.empty()) {
         std::cerr << message << ": ";
     }
-    std::cerr << percentage * 100.0 << "\r";
+    std::cerr << percentage * 100.0 << "   \r";
     std::cerr.flush();
 }
 

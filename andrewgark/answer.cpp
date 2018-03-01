@@ -13,6 +13,7 @@ long double getRandomDouble(const long double mod) {
 }
 
 long double getTemperatureProbLimit(const long double neighborBonus, const long double lastBonus, const long double temperature) {
+    //std::cerr << exp(-(lastBonus - neighborBonus) / temperature) << std::endl;
     return exp(-(lastBonus - neighborBonus) / temperature);
 }
 
@@ -125,7 +126,7 @@ long double Answer::getBonus(const Data& data) const {
 
             //std::cerr << "ride " << ride << std::endl;
             auto start = data.rides[ride].start;
-            auto  finish = data.rides[ride].finish;
+            auto finish = data.rides[ride].finish;
 
             long long rdist = get_dist(coord, data.rides[ride].start);
             long long rtime = get_dist(data.rides[ride].start, data.rides[ride].finish);
@@ -136,6 +137,8 @@ long double Answer::getBonus(const Data& data) const {
             if (t <= data.T && t <= data.rides[ride].latestFinish) {
                 money += rtime;
             }
+
+            coord = data.rides[ride].finish;
         }
     }
     return money;

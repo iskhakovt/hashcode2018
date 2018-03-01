@@ -10,11 +10,11 @@
 using namespace std;
  
 const int SEED = 12345672;
-const long double T_START = 1e9;
+const long double T_START = 10000;
 const long double T_END = 1e-9;
-const long double T_COEFF = 0.9999;
-const int CHANGES = 5;
-const int PRINT_STEP = 1000;
+const long double T_COEFF = 0.999999;
+const int CHANGES = 100;
+const int PRINT_STEP = 10000;
  
 int main(int argc, char** argv) {
 	srand(SEED);
@@ -40,7 +40,6 @@ int main(int argc, char** argv) {
 
     int i = 0;
     while (temperature > T_END) {
-    	//std::cerr << i << " " << curBonus << std::endl;
     	Answer neighborAnswer = curAnswer.getNeighbor(CHANGES, temperature);
 
     	//std::cerr << "..." << std::endl;
@@ -60,6 +59,7 @@ int main(int argc, char** argv) {
         temperature *= T_COEFF;
 
         if (i % PRINT_STEP == 0) {
+    		std::cerr << i << " " << curBonus << " " << bestBonus << std::endl;
 			freopen("result.txt", "w", stdout);
 			bestAnswer.print(std::cout);
 			freopen("result_bonus.txt", "w", stdout);

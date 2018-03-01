@@ -39,33 +39,44 @@ Game greedy_basic_iskhakovt(const Data& data) {
         rides.insert(i);
     }
 
-    vector<int> next;
+    vector<int> next(CARS, -1);
 
-    set<pair<int, pair<int, int>>> candidates; // timeToFinish, car, ride
+    set<pair<int, int>> candidates; // timeToFinish, car
 
     for (int car = 0; car != CARS; ++car) {
         int ride = get_best_ride(game, data, car, rides);
         if (ride != -1) {
-            candidates.insert({game.cars[car].timeOfFinish(data.rides[ride]), {car, ride}});
+            candidates.insert({game.cars[car].timeOfFinish(data.rides[ride]), car});
+            next[car] = ride;
         }
     }
 
     while (!candidates.empty()) {
-        // for (const auto& p : candidates)
-
-        int car = candidates.begin()->second.first;
-        int ride = candidates.begin()->second.second;
+        int car = candidates.begin()->second;
+        int ride = next[car];
+        assert(ride != -1);
         candidates.erase(candidates.begin());
 
         if (rides.find(ride) == rides.end()) continue;
         rides.erase(ride);
+
+        for (int ncar = 0; ncar != CARS; ++ncar) {
+            if (next[ncar] == ride) {
+                int nride = get_best_ride(game, data, ncar, rides);
+                if (nride != -1) {
+                    candidates.insert({game.cars[ncar].timeOfFinish(data.rides[nride]), ncar});
+                    next[ncar] = nride;
+                }
+            }
+        }
 
         game.cars[car].assignedRuns.push_back(ride);
         game.cars[car].time = game.cars[car].timeOfFinish(data.rides[ride]);
 
         ride = get_best_ride(game, data, car, rides);
         if (ride != -1) {
-            candidates.insert({game.cars[car].timeOfFinish(data.rides[ride]), {car, ride}});
+            candidates.insert({game.cars[car].timeOfFinish(data.rides[ride]), car});
+            next[car] = ride;
         }
     }
 

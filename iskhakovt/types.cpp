@@ -23,13 +23,21 @@ int RideData::dist() const {
     return get_dist(start, finish);
 }
 
+int Car::timeToStart(const RideData& ride) const {
+    int dist = get_dist(pos, ride.start);
+    return std::max(dist, ride.earliestStart - time);
+}
+
 int Car::timeOfStart(const RideData& ride) const {
-    return get_dist(pos, ride.start);
+    return time + timeToStart(ride);
+}
+
+int Car::timeToFinish(const RideData& ride) const {
+    return timeToStart(ride) + ride.dist();
 }
 
 int Car::timeOfFinish(const RideData& ride) const {
-    int dist = get_dist(pos, ride.start);
-    return std::min(time + dist, ride.earliestStart) + ride.dist();
+    return time + timeToFinish(ride);
 }
 
 bool Car::canGetTo(const RideData& ride) const {

@@ -84,7 +84,9 @@ struct Car {
 
     Car() = default;
 
+    int timeToStart(const RideData& ride) const;
     int timeOfStart(const RideData& ride) const;
+    int timeToFinish(const RideData& ride) const;
     int timeOfFinish(const RideData& ride) const;
     bool canGetTo(const RideData& ride) const;
 };

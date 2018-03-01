@@ -23,16 +23,7 @@ struct Data {
     const int T;
     const std::vector<RideData> rides;
 
-    Data(int R, int C, int F, int N, int B, int T, std::vector<RideData> rides) :
-            R(R),
-            C(C),
-            F(F),
-            N(N),
-            B(B),
-            T(T),
-            rides(rides) {
-        assert(rides.size() == (size_t)N);
-    }
+    Data(int, int, int, int, int, int, std::vector<RideData>);
 
     static Data read(std::istream&);
 };
@@ -48,15 +39,11 @@ struct RideData {
     const int s;
     const int f;
 
-    RideData(coord_t start, coord_t finish, int _s, int _f) :
-            start(start),
-            finish(finish),
-            earliestStart(_s),
-            latestFinish(_f),
-            s(_s),
-            f(_f) {}
+    const int id;
 
-    static RideData read(std::istream&);
+    RideData(coord_t, coord_t, int, int, int);
+
+    static RideData read(std::istream&, int);
 
     int dist() const;
 };
@@ -71,14 +58,13 @@ struct Game {
 
     bool validate_output(const Data& data);
     void print(std::ostream&);
+
+    void push_ride(int, const RideData&, int B);
 };
 
 
 struct Car {
     coord_t pos = {0, 0};
-    int ride = -1;
-
-    // TODO
 
     std::vector<int> assignedRuns;
     int time = 0;

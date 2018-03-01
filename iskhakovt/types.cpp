@@ -1,22 +1,43 @@
 #include "types.h"
 
+
+Data::Data(int R, int C, int F, int N, int B, int T, std::vector<RideData> rides) :
+        R(R),
+        C(C),
+        F(F),
+        N(N),
+        B(B),
+        T(T),
+        rides(rides) {
+    assert(rides.size() == (size_t)N);
+}
+
 Data Data::read(std::istream& in) {
     int R, C, F, N, B, T;
     in >> R >> C >> F >> N >> B >> T;
 
     std::vector<RideData> rides;
     for (int i = 0; i != N; ++i) {
-        rides.emplace_back(RideData::read(in));
+        rides.emplace_back(RideData::read(in, i));
     }
 
     return Data(R, C, F, N, B, T, rides);
 }
 
-RideData RideData::read(std::istream& in) {
+RideData::RideData(coord_t start, coord_t finish, int _s, int _f, int id) :
+    start(start),
+    finish(finish),
+    earliestStart(_s),
+    latestFinish(_f),
+    s(_s),
+    f(_f),
+    id(id) {}
+
+RideData RideData::read(std::istream& in, int id) {
     coord_t start, finish;
     int s, f;
     in >> start.first >> start.second >> finish.first >> finish.second >> s >> f;
-    return RideData(start, finish, s, f);
+    return RideData(start, finish, s, f, id);
 }
 
 int RideData::dist() const {
@@ -58,10 +79,22 @@ void Game::print(std::ostream& out) {
     for (int i = 0; i != (int)cars.size(); ++i) {
         out << cars[i].assignedRuns.size();
         for (int ride : cars[i].assignedRuns) {
-            out << " " << ride + 1;
+            out << " " << ride;
         }
         out << "\n";
     }
+}
+
+void Game::push_ride(int car, const RideData& ride, int B) {
+    assert(cars[car].canGetTo(ride));
+
+    if (cars[car].timeOfStart(ride) == ride.earliestStart) {
+        result += B;
+    }
+
+    result += ride.dist();
+    cars[car].time = cars[car].timeOfFinish(ride);
+    cars[car].assignedRuns.push_back(ride.id);
 }
 
 void print_percentage(int done, int all, const std::string& message) {

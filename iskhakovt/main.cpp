@@ -19,5 +19,7 @@ int main(int argc, char** argv) {
 
     game.print(std::cout);
 
+    std::cerr << "SCORE: " << game.result << std::endl;
+
     return 0;
 }

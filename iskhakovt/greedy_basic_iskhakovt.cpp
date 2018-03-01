@@ -64,6 +64,7 @@ Game greedy_basic_iskhakovt(const Data& data) {
         rides.erase(ride);
 
         for (int ncar = 0; ncar != CARS; ++ncar) {
+            if (ncar == car) continue;
             if (next[ncar] == ride) {
                 int nride = get_best_ride(game, data, ncar, rides);
                 if (nride != -1) {
@@ -73,8 +74,7 @@ Game greedy_basic_iskhakovt(const Data& data) {
             }
         }
 
-        game.cars[car].assignedRuns.push_back(ride);
-        game.cars[car].time = game.cars[car].timeOfFinish(data.rides[ride]);
+        game.push_ride(car, data.rides[ride], data.B);
 
         ride = get_best_ride(game, data, car, rides);
         if (ride != -1) {

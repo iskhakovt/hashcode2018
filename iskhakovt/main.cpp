@@ -6,6 +6,9 @@
 
 
 int main(int argc, char** argv) {
+    std::cerr.precision(2);
+    std::cerr << std::fixed;
+
     if (argc >= 2) {
         freopen(argv[1], "r", stdin);
     }
@@ -18,6 +21,9 @@ int main(int argc, char** argv) {
     auto game = greedy_basic_iskhakovt(data);
 
     game.print(std::cout);
+
+    std::cerr << "\n";
+    std::cerr << "SCORE: " << game.result << std::endl;
 
     return 0;
 }

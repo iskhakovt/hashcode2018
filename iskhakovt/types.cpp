@@ -18,3 +18,17 @@ RideData RideData::read(std::istream& in) {
     in >> start.first >> start.second >> finish.first >> finish.second >> s >> f;
     return RideData(start, finish, s, f);
 }
+
+int RideData::dist() const {
+    return get_dist(start, finish);
+}
+
+bool Car::canGetTo(const RideData& ride) const {
+    int dist = get_dist(pos, ride.start);
+    return std::min(time + dist, ride.earliestStart) + ride.dist() <= ride.latestFinish;
+}
+
+int get_dist(const coord_t& start, const coord_t& finish) {
+    return std::max(start.first, finish.first) - std::min(start.first, finish.first) +
+           std::max(start.second, finish.second) - std::min(start.second, finish.second);
+}

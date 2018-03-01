@@ -10,6 +10,6 @@ int main(int argc, char** argv) {
     }
 
     auto data = Data::read(std::cin);
-
+    
     return 0;
 }

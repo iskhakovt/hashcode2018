@@ -76,6 +76,7 @@ struct Car {
     int timeToFinish(const RideData& ride) const;
     int timeOfFinish(const RideData& ride) const;
     bool canGetTo(const RideData& ride) const;
+    double getValue(const RideData ride, int B) const;
 };
 
 

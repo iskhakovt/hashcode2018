@@ -65,6 +65,11 @@ bool Car::canGetTo(const RideData& ride) const {
     return timeOfFinish(ride) <= ride.latestFinish;
 }
 
+double Car::getValue(const RideData ride, int B) const {
+    double rideCost = ride.dist() + (timeOfStart(ride) == ride.earliestStart ? B : 0);
+    return rideCost / (double)(timeToFinish(ride));
+}
+
 int get_dist(const coord_t& start, const coord_t& finish) {
     return std::max(start.first, finish.first) - std::min(start.first, finish.first) +
            std::max(start.second, finish.second) - std::min(start.second, finish.second);

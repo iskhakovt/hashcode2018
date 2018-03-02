@@ -83,6 +83,10 @@ void processGame(const Data& data, int car, int ride, Game* game, set<pair<int, 
 
     for (int nextCar : carsToFix) {
         auto nextRides = get_best_rides(*game, data, nextCar);
+        if (nextCar != car && !nextRides.empty()) {
+            nextRides.erase(nextRides.begin() + 1, nextRides.end());
+        }
+
         for (int nextRide : nextRides) {
             candidates->insert({game->cars[nextCar].timeOfFinish(data.rides[nextRide]), {nextCar, nextRide}});
         }

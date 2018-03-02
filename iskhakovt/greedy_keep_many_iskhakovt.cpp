@@ -112,13 +112,21 @@ Game greedy_keep_many_iskhakovt(const Data& data) {
 
         for (int i = 0; i != (int)games.size(); ++i) {
             const auto& game = games[i].first;
-            auto cand = games[i].second;
+            auto& cand = games[i].second;
+
+            vector<pair<int, pair<int, int>>> erased;
 
             for (int j = 0; j != SECOND_METRIC_BEST && !cand.empty(); ++j) {
                 int car = cand.begin()->second.first;
                 int ride = cand.begin()->second.second;
+                assert(game.usedRuns.find(ride) == game.usedRuns.end());
                 gameCandidates.emplace_back(i, car, ride, game.reward(car, data.rides[ride], data.B) + game.result);
+                erased.push_back(*cand.begin());
                 cand.erase(cand.begin());
+            }
+
+            for (const auto& elem : erased) {
+                cand.insert(elem);
             }
         }
 
